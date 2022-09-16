@@ -1,22 +1,50 @@
-const ordersArr = [4, 2, 1, 3];
+const ordersArr = [4, 2, 1, 3]
 const people = [
-  { id: 1, name: "Максим" },
-  { id: 2, name: "Николай" },
-  { id: 3, name: "Ангелина" },
-  { id: 4, name: "Виталий" },
-];
+  { id: 1, name: 'Максим' },
+  { id: 2, name: 'Николай' },
+  { id: 3, name: 'Ангелина' },
+  { id: 4, name: 'Виталий' },
+]
 
-const result = giveTalonsInOrder(people, ordersArr);
-console.log("result", result);
+const result = giveTalonsInOrder(people, ordersArr)
+console.log('result', result)
 
 function giveTalonsInOrder(patients, orders) {
-  let result = [];
+  let result = []
   for (let item of orders) {
     for (let elem of patients) {
-      if (elem["id"] === item) {
-        result.push(elem);
+      if (elem['id'] === item) {
+        result.push(elem)
       }
     }
   }
-  return result;
+  return result
 }
+
+//* ---answer
+const ordersArr = [4, 2, 1, 3]
+const people = [
+  { id: 1, name: 'Максим' },
+  { id: 2, name: 'Николай' },
+  { id: 3, name: 'Ангелина' },
+  { id: 4, name: 'Виталий' },
+]
+
+const giveTalonsInOrder = (patients, orders) => {
+  const objectWithIndexes = patients.reduce((acc, curPerson) => {
+    acc[curPerson.id] = curPerson
+    return acc
+  }, {})
+  return orders.map((order) => objectWithIndexes[order])
+}
+
+const result = giveTalonsInOrder(people, ordersArr)
+console.log('result', result)
+/* Возвращает массив
+[
+    { id: 4, name: 'Виталий' },
+    { id: 2, name: 'Николай' },
+    { id: 1, name: 'Максим' },
+    { id: 3, name: 'Ангелина' }
+]
+*/
