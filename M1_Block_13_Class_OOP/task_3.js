@@ -4,26 +4,33 @@ class Dictionary {
     this.words = {}
   }
   add(word, description) {
-    const objWords = {}
     const dynamicKey = word
-    this.words[dynamicKey] = word
-    const dynamicDescription = description
-    objWords[dynamicDescription] = description
-    console.log(this)
+    const sss = {`${this.word}: word, ${this.description}: description`}
+    Object.assign(this.words, {[dynamicKey]: sss})
+    // this.words[dynamicKey] = {}
+    // const objWords = this.words[dynamicKey]
+    // objWords.word = word
+    // objWords.description = description
+
   }
   remove() {}
   get() {}
   showAllWords() {
-    console.log(`${this.word} - ${this.description}`)
+    const a = this.words
+    console.log(`${a[word]} - ${this.words}`)
+    console.log(this.words[Object.keys])
   }
 }
 
 const dictionary = new Dictionary('Толковый словарь')
 dictionary.add('JavaScript', 'популярный язык программирования')
-// dictionary.add('Веб-разработчик', 'Человек, который создает новые сервисы и сайты или поддерживает и дополняет существующие');
+dictionary.add(
+  'Веб-разработчик',
+  'Человек, который создает новые сервисы и сайты или поддерживает и дополняет существующие'
+)
 
 // dictionary.remove('JavaScript');
-// dictionary.showAllWords()
+dictionary.showAllWords()
 // Веб-разработчик - Человек, который создает новые сервисы и сайты или поддерживает
 // и дополняет существующие
 console.log(dictionary)
