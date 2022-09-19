@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="task_3.js"></script>
+  <title>Ключевое сдово - this</title>
+</head>
+
+<body>
+  <h2>Задача № 1</h2>
+  <p>Представь, что тебя как веб-разработчика попросили разработать веб-платформу, которая будет отслеживать прогресс
+    студентов в обучении веб-разработке.<br>
+
+    Для начала тебе необходимо создать объект student, в котором будут 3 свойства:<br>
+
+    1. stack - массив из строк, где каждая строка - это технология. Изначально массив должен быть равен ['HTML'].<br>
+    2. level - тип данных number. level отвечает за текущий уровень студента и изначально равен 1.<br>
+    3. improveLevel() - функция, которая сначала увеличивает значение свойства level у студента на единицу. Если level
+    равен 2-м, то тебе необходимо добавить в конец массива stack значение 'CSS', если 3-м - добавляем в конец stack
+    значение 'JavaScript', 4-м - 'React', 5-ти - 'NodeJS'. Если значение level стало больше 5-ти, то тебе необходимо
+    вывести в модальном окне через alert() сообщение: “Студент выучил все технологии!”. Также функция improveLevel()
+    должна возвращать в самом конце обновленный объект student.<br>
+    В итоге, значение свойства stack после выполнения кода ниже должно быть равно ["HTML", "CSS", "JavaScript", "React",
+    "NodeJS"]:<br>
+    <br>
+    student<br>
+    .improveLevel()<br>
+    .improveLevel()<br>
+    .improveLevel()<br>
+    .improveLevel()<br>
+    .improveLevel()<br>
+    Примечание: цепочка из подряд идущих функций impoveLevel() работает так, потому что improveLevel() возвращает объект
+    student, а у объекта student есть метод impoveLevel().
+
+    Посмотри на пример:<br>
+    <br>
+    const student = {<br>
+    improveLevel() {<br>
+    return this;<br>
+    }<br>
+    };<br>
+
+    student<br>
+    .improveLevel()<br>
+    .improveLevel()<br>
+    .improveLevel();
+  </p>
+  <h2>Задача № 2</h2>
+  <p>У тебя есть 2 объекта dog и bird, в которых содержится их описание:<br>
+    <br>
+    const dog = {<br>
+    name: 'Чарли',<br>
+    type: 'Собака',<br>
+    makeSound() {<br>
+    return 'Гав-Гав';<br>
+    }<br>
+    }<br>
+    <br>
+    const bird = {<br>
+    name: 'Петя',<br>
+    type: 'Воробей',<br>
+    makeSound() {<br>
+    return 'Чик-чирик';<br>
+    }<br>
+    }<br>
+    Тебе необходимо создать функцию makeDomestic(), которая будет работать с ключевым словом this таким образом:<br>
+
+    function makeDomestic(isDomestic) {<br>
+    // Твоя реализация<br>
+    }<br>
+    <br>
+    makeDomestic.bind(dog, true)(); <br>
+    // Вернет объект: {name: 'Чарли', type: 'Собака', isDomestic: true, makeSound: ƒ}<br>
+    // И выведет сообщение: "Собака по имени Чарли говорит Гав-Гав"<br>
+    <br>
+    makeDomestic.call(bird, false); <br>
+    // Вернет объект: {name: 'Петя', type: 'Воробей', isDomestic: false, makeSound: ƒ}<br>
+    // И выведет сообщение: "Воробей по имени Петя говорит Чик-чирик"<br>
+    Она должна выводить в консоль всю информацию о животном в сообщении: “type по имени name говорит sound”, где name -
+    имя животного, type - его тип, sound - результат вызова функции makeSound().<br>
+    <br>
+    Также функция makeDomestic() должна принимать параметр isDomestic. Он является типом данных boolean и показывает,
+    домашнее ли животное или нет (true/false).<br>
+    <br>
+    Функция makeDomestic() должна возвращать новый объект животного, в котором будут все прошлые параметры (name, type,
+    makeSound()), а также будет добавлен новый параметр isDomestic.<br>
+    <br>
+    Кроме этого, для обращения к свойствам животного функция makeDomestic() должна использовать только this. Т.е. тебе
+    разрешено обращаться к свойствам только через this.name либо this.makeSound(), но никак не bird.name либо
+    bird.makeSound().<br>
+    <br>
+    Вызови функцию makeDomestic() 3 раза, используя методы bind(), call(), apply(). При использовании bind() функция
+    makeDomestic() должна работать с объектом dog, при apply() и call() - с объектом bird. Не забывай передавать
+    параметр isDomestic в функцию при ее вызове.
+  </p>
+  <h2>Задача № 3</h2>
+  <p>Дан объект footballer, в котором есть некоторая информация о футболисте и действиях, которые он может
+    выполнять:<br>
+    const footballer = {<br>
+    fullName: 'Cristiano Ronaldo',<br>
+    attack: () => {<br>
+    console.log(`${this.fullName} сейчас с мячом и начинает атаку!`);<br>
+    },<br>
+    scoreGoal(sound) {<br>
+    console.log(`${this.fullName} забил гол! Вот это да!`);<br>
+    this.celebrate(sound);<br>
+    },<br>
+    celebrate(sound) {<br>
+    console.log(sound);<br>
+    },<br>
+    goToSubstitution: function(newPlayer) {<br>
+    console.log(`${this.fullName} уходит на замену. На поле выходит ${newPlayer}`);<br>
+    }<br>
+    };<br>
+    <br>
+    const attack = footballer.attack;<br>
+    const score = footballer.scoreGoal;<br>
+    const substitute = footballer.goToSubstitution;<br>
+    attack();<br>
+    score('Сиииии');<br>
+    substitute('Paulo Dibala');<br>
+    К сожалению, данный код работает неверно. В некоторых случаях он выводит undefined, а в других - вообще ошибку.<br>
+
+    Тебе необходимо исправить данный код, используя bind(), call() и apply():<br>
+
+    1. Функцию attack() необходимо исправить при помощи bind() + нужно вспомнить особенность стрелочных функций (нет
+    своего
+    this).<br>
+    2. Функцию score() - при помощи call().<br>
+    3. Функцию substitute() - при помощи apply().<br>
+  </p>
+</body>
+
+</html>
