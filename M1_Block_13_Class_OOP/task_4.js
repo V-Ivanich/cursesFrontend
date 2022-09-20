@@ -13,15 +13,16 @@ class Dictionary {
     objWords.description = description
   }
   remove(keyForDelete) {
-    if (this.get(keyForDelete)) {
-      delete this.words[keyForDelete]
-    }
+    const indexItem = this.words.findIndex(
+      (elem) => elem === this.get(keyForDelete)
+    )
+    delete this.words[indexItem]
   }
   get(wordKey) {
     const arrayKeys = Object.values(this.words)
     for (let elem of arrayKeys) {
-      if (elem[this.word] === wordKey) {
-        return this.words[elem]
+      if (elem.word === wordKey) {
+        return elem
       }
     }
   }
@@ -33,12 +34,6 @@ class Dictionary {
     }
   }
 }
-
-// {
-//    word: 'word',
-//    description: 'description',
-//    isDifficult: true,
-// }
 
 class HardWordsDictionary extends Dictionary {
   constructor(name) {
@@ -74,4 +69,4 @@ hardWordsDictionary.remove('неологизм')
 
 hardWordsDictionary.showAllWords()
 
-// дилетант - Тот, кто занимается наукой или искусством // без специальной подготовки, обладая только поверхностными знаниями.// квант - Неделимая часть какой-либо величины в физике.
+// дилетант - Тот, кто занимается наукой или искусством без специальной подготовки, обладая только поверхностными знаниями.// квант - Неделимая часть какой-либо величины в физике.

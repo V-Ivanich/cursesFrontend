@@ -25,6 +25,7 @@ class Dictionary {
       }
     }
   }
+
   showAllWords() {
     for (let keys in this.words) {
       const arrayValues = Object.values(this.words[keys])
@@ -41,8 +42,8 @@ dictionary.add(
   'Человек, который создает новые сервисы и сайты или поддерживает и дополняет существующие'
 )
 dictionary.add('JavaScript', 'это проверочная строка, -не должна добавиться')
-dictionary.remove('JavaScript')
 dictionary.add('Веб-разработчик', 'Hello world!!!!!')
+dictionary.remove('JavaScript')
 dictionary.showAllWords()
 // Веб-разработчик - Человек, который создает новые сервисы и сайты или поддерживает
 // и дополняет существующие
