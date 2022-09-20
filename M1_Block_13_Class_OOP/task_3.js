@@ -18,23 +18,18 @@ class Dictionary {
     }
   }
   get(wordKey) {
-    const str = Object.keys(this.words)
-    for (let elem of str) {
+    const arrayKeys = Object.keys(this.words)
+    for (let elem of arrayKeys) {
       if (elem === wordKey) {
         return this.words[elem]
       }
     }
   }
   showAllWords() {
-    const arrayValues = []
     for (let keys in this.words) {
-      for (let elem in this.words[keys]) {
-        arrayValues.push(this.words[keys][elem])
-      }
-      console.log(arrayValues.join(' - '))
-      arrayValues.forEach((elem, index, arrayValues) => {
-        arrayValues.pop(elem)
-      })
+      const arrayValues = Object.values(this.words[keys])
+      console.log(`${arrayValues[0]} - ${arrayValues[1]}`)
+      arrayValues.length = 0
     }
   }
 }
@@ -47,6 +42,7 @@ dictionary.add(
 )
 dictionary.add('JavaScript', 'это проверочная строка, -не должна добавиться')
 dictionary.remove('JavaScript')
+dictionary.add('Веб-разработчик', 'Hello world!!!!!')
 dictionary.showAllWords()
 // Веб-разработчик - Человек, который создает новые сервисы и сайты или поддерживает
 // и дополняет существующие
