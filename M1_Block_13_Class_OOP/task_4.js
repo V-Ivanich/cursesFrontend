@@ -1,7 +1,7 @@
 class Dictionary {
   constructor(name) {
     this.name = name
-    this.words = {}
+    this.words = []
   }
 
   add(word, description) {
@@ -13,16 +13,29 @@ class Dictionary {
     objWords.description = description
   }
   remove(keyForDelete) {
-    const indexItem = this.words.findIndex(
-      (elem) => elem === this.get(keyForDelete)
-    )
-    delete this.words[indexItem]
+    if (Array.isArray(this.words)) {
+      const indexItem = this.words.findIndex(
+        (elem) => elem === this.get(keyForDelete)
+      )
+      delete this.words[indexItem]
+    } else {
+      delete this.words[keyForDelete]
+    }
   }
   get(wordKey) {
-    const arrayKeys = Object.values(this.words)
-    for (let elem of arrayKeys) {
-      if (elem.word === wordKey) {
-        return elem
+    if (Array.isArray(this.words)) {
+      const arrayKeys = Object.values(this.words)
+      for (let elem of arrayKeys) {
+        if (elem.word === wordKey) {
+          return elem
+        }
+      }
+    } else {
+      const arrayKeys = Object.keys(this.words)
+      for (let elem of arrayKeys) {
+        if (elem === wordKey) {
+          return this.words[elem]
+        }
       }
     }
   }

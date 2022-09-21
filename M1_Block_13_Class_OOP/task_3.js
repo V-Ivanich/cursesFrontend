@@ -12,16 +12,31 @@ class Dictionary {
     objWords.word = word
     objWords.description = description
   }
+
   remove(keyForDelete) {
-    if (this.get(keyForDelete)) {
+    if (Array.isArray(this.words)) {
+      const indexItem = this.words.findIndex(
+        (elem) => elem === this.get(keyForDelete)
+      )
+      delete this.words[indexItem]
+    } else {
       delete this.words[keyForDelete]
     }
   }
   get(wordKey) {
-    const arrayKeys = Object.keys(this.words)
-    for (let elem of arrayKeys) {
-      if (elem === wordKey) {
-        return this.words[elem]
+    if (Array.isArray(this.words)) {
+      const arrayKeys = Object.values(this.words)
+      for (let elem of arrayKeys) {
+        if (elem.word === wordKey) {
+          return elem
+        }
+      }
+    } else {
+      const arrayKeys = Object.keys(this.words)
+      for (let elem of arrayKeys) {
+        if (elem === wordKey) {
+          return this.words[elem]
+        }
       }
     }
   }
