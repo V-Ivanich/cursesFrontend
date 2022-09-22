@@ -11,23 +11,26 @@ const attacker = {
   cavalry: 10,
   artillery: 3,
 
-  checkChancesToWin: function (defenderObject) {
+  checkChancesToWin(defenderObject) {
     let chance = 0
     const keysDefender = Object.getOwnPropertyNames(defenderObject)
     keysDefender.forEach((elem) => {
       if (defenderObject[elem] < this[elem]) chance++
     })
-    return [chance, keysDefender.length]
+    chance = [chance, keysDefender.length]
+    return chance
   },
 
-  improveArmy: function () {
-    const keysAttacker = Object.getOwnPropertyNames(this)
+  improveArmy() {
+    const keysAttacker = Object.entries(this).filter((elem) => {
+      return Number.isInteger(elem[1])
+    })
     keysAttacker.forEach((elem) => {
-      this[elem] += 5
+      this[elem[0]] += 5
     })
   },
 
-  attack: function (defender) {
+  attack(defender) {
     const countChance = this.checkChancesToWin(defender)
     if ((countChance[0] * 100) / countChance[1] > 70) {
       console.log('Мы усилились! Мы несомненно победим! Наши шансы высоки!')
@@ -39,10 +42,6 @@ const attacker = {
     }
   },
 }
-attacker.attack(defender)
-attacker.attack(defender)
-
-attacker.attack(defender)
-// attacker.attack(defender) // Наши шансы равны 1/4. Необходимо укрепление!
-// attacker.attack(defender) // Наши шансы равны 2/4. Необходимо укрепление!
-// attacker.attack(defender) // Мы усилились! Мы несомненно победим! Наши шансы высоки!
+attacker.attack(defender) //? Наши шансы равны 1/4. Необходимо укрепление!
+attacker.attack(defender) //? Наши шансы равны 2/4. Необходимо укрепление!
+attacker.attack(defender) //? Мы усилились! Мы несомненно победим! Наши шансы высоки!
