@@ -7,36 +7,50 @@ class Dictionary {
   }
 
   add(word, description) {
-    if (!this.words[word]) {
-      this.words[word] = {
-        word,
-        description,
-      }
+    if (!this.#words[word]) {
+      _addNewWord(word, description)
     }
   }
 
   remove(word) {
-    delete this.words[word]
+    delete this.#words[word]
   }
 
   get(word) {
-    return this.words[word]
+    return this.#words[word]
   }
 
   showAllWords() {
-    Object.values(this.words).forEach((wordItem) => {
+    Object.values(this.#words).forEach(wordItem => {
       console.log(`${wordItem.word} - ${wordItem.description}`)
     })
   }
 
-  get mainName() {}
-  set mainName() {}
+  _addNewWord(wordKey, wordObj) {
+    this.#words[wordKey] = {
+      wordKey,
+      wordObj,
+    }
+  }
+
+  get mainName() {
+    return this.#name
+  }
+
+  get allWords() {
+    return this.#words
+  }
+
+  set mainName(name) {
+    this.#name = name
+  }
 }
 
+//! new class
 class HardWordsDictionary extends Dictionary {
   add(word, description) {
-    if (!this.words[word]) {
-      this.words[word] = {
+    if (!this.allWords[word]) {
+      this.allWords[word] = {
         word,
         description,
         isDifficult: true,
@@ -49,17 +63,17 @@ const hardWordsDictionary = new HardWordsDictionary('Сложные слова')
 
 hardWordsDictionary.add(
   'дилетант',
-  'Тот, кто занимается наукой или искусством без специальной подготовки, обладая только поверхностными знаниями.'
+  'Тот, кто занимается наукой или искусством без специальной подготовки, обладая только поверхностными знаниями.',
 )
 
 hardWordsDictionary.add(
   'неологизм',
-  'Новое слово или выражение, а также новое значение старого слова.'
+  'Новое слово или выражение, а также новое значение старого слова.',
 )
 
 hardWordsDictionary.add(
   'квант',
-  'Неделимая часть какой-либо величины в физике.'
+  'Неделимая часть какой-либо величины в физике.',
 )
 
 hardWordsDictionary.remove('неологизм')
