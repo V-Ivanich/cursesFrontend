@@ -59,6 +59,6 @@ function createCard(mainList, objItem) {
   mainForm.appendChild(mainInput)
   mainInput.after(mainLabel)
 }
-createCard(mainList, tasks[0])
-createCard(mainList, tasks[1])
-createCard(mainList, tasks[2])
+tasks.forEach(elem => {
+  createCard(mainList, elem)
+})
