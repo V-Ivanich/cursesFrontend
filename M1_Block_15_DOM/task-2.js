@@ -1,6 +1,6 @@
 const mainForm = document.querySelector('.create-task-block')
-const listTasks = document.querySelector('.tasks-list')
-const tasks = {}
+const tasksListContainer = document.querySelector('.tasks-list')
+const tasks = []
 const textErrorsEmpty = 'Название задачи не должно быть пустым.'
 const textErrorsDublicate = 'Задача с таким названием уже существует.'
 
@@ -28,7 +28,4 @@ function outErrors(textErrors) {
   errorsSpan.classList.add('error-message-block')
   errorsSpan.textContent = textErrors
   mainForm.append(errorsSpan)
-  // setTimeout(() => {
-  //   errorsSpan.remove()
-  // }, 3000)
 }
