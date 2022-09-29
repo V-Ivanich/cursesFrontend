@@ -7,7 +7,7 @@ mainForm.addEventListener('submit', e => {
   const { target } = e
   const mainInput = target.taskName.value
 
-  tasks.push({ id: getNewDate(), task: mainInput })
+  tasks[getNewDate()] = mainInput
   listTasks.innerHTML += `id = ${getNewDate()} --> task = ${mainInput} <br>`
 })
 
