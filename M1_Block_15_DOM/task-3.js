@@ -42,7 +42,6 @@ deleteModalButton.appendChild(confirmButton)
 
 const modalWindowInJS = document.querySelector('.modal-overlay')
 
-//?--inicialisations buttons in js
 const buttonsCancelConfirm = document.querySelector('.delete-modal__buttons')
 buttonsCancelConfirm.addEventListener('click', e => {
   if (e.target.closest('.delete-modal__confirm-button')) {
@@ -53,9 +52,9 @@ buttonsCancelConfirm.addEventListener('click', e => {
       }
     })
     tasks.forEach((item, index) => {
-      if ((item.id = idDeleteItems)) {
+      if (item.id === Number(idDeleteItems)) {
         delete tasks[index]
-        console.log(tasks[index])
+        tasks.sort().pop()
       }
     })
   }
