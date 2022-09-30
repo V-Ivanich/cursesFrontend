@@ -1,99 +1,84 @@
-// const mainForm = document.querySelector('.create-task-block')
-// const listTasks = document.querySelector('.tasks-list')
-// const tasks = {}
-// const textErrorsEmpty = 'Название задачи не должно быть пустым.'
-// const textErrorsDublicate = 'Задача с таким названием уже существует.'
+const mainForm = document.querySelector('.create-task-block')
+const tasksListContainer = document.querySelector('.tasks-list')
+const tasks = []
+const textErrorsEmpty = 'Название задачи не должно быть пустым.'
+const textErrorsDublicate = 'Задача с таким названием уже существует.'
 
-// mainForm.addEventListener('submit', e => {
-//   e.preventDefault()
-//   const { target } = e
-//   const mainInput = target.taskName.value
-//   const getDublicate = Object.values(tasks).includes(mainInput)
-//   if (mainInput) {
-//     if (getDublicate) {
-//       outErrors(textErrorsDublicate)
-//     } else {
-//       const errorsSpan = document.querySelector('.error-message-block')
-//       if (errorsSpan) errorsSpan.remove()
-//       const setId = Date.now()
-//       tasks[setId] = mainInput
-//       listTasks.innerHTML += `id = ${setId} --> task = ${mainInput} <br>`
-//       console.log(tasks)
-//     }
-//   } else outErrors(textErrorsEmpty)
-// })
+mainForm.addEventListener('submit', e => {
+  e.preventDefault()
+  const { target } = e
+  const mainInput = target.taskName.value
+  const getDublicate = tasks.filter(elem => {
+    return elem.text === mainInput
+  })
 
-// function outErrors(textErrors) {
-//   const errorsSpan = document.createElement('span')
-//   errorsSpan.classList.add('error-message-block')
-//   errorsSpan.textContent = textErrors
-//   mainForm.append(errorsSpan)
-//   // setTimeout(() => {
-//   //   errorsSpan.remove()
-//   // }, 3000)
-// }
-// const tasks = [
-//   {
-//     id: '1138465078061',
-//     completed: false,
-//     text: 'Посмотреть новый урок по JavaScript',
-//   },
-//   {
-//     id: '1138465078062',
-//     completed: false,
-//     text: 'Выполнить тест после урока',
-//   },
-//   {
-//     id: '1138465078063',
-//     completed: false,
-//     text: 'Выполнить ДЗ после урока',
-//   },
-// ]
+  if (mainInput) {
+    if (getDublicate.length) {
+      outErrors(textErrorsDublicate)
+    } else {
+      const errorsSpan = document.querySelector('.error-message-block')
+      if (errorsSpan) errorsSpan.remove()
+      const setId = Date.now()
+      tasks.push({ id: setId, text: mainInput })
+      const taskItem = createTaskItem(setId, mainInput)
+      tasksListContainer.append(taskItem)
+    }
+  } else outErrors(textErrorsEmpty)
+})
 
-// const createTaskItem = (taskId, taskText) => {
-//   const taskItem = document.createElement('div')
-//   taskItem.className = 'task-item'
-//   taskItem.dataset.taskId = taskId
+tasksListContainer.addEventListener('click', e => {
+  const { target } = e
+  const deleteButton = target.closest('button')
+  if (deleteButton) {
+    console.log(deleteButton)
+  }
+})
 
-//   const taskItemMainContainer = document.createElement('div')
-//   taskItemMainContainer.className = 'task-item__main-container'
+function outErrors(textErrors) {
+  const errorsSpan = document.createElement('span')
+  errorsSpan.classList.add('error-message-block')
+  errorsSpan.textContent = textErrors
+  mainForm.append(errorsSpan)
+}
 
-//   const taskItemMainContent = document.createElement('div')
-//   taskItemMainContent.className = 'task-item__main-content'
+const createTaskItem = (taskId, taskText) => {
+  const taskItem = document.createElement('div')
+  taskItem.className = 'task-item'
+  taskItem.dataset.taskId = taskId
 
-//   taskItem.append(taskItemMainContainer)
-//   taskItemMainContainer.append(taskItemMainContent)
+  const taskItemMainContainer = document.createElement('div')
+  taskItemMainContainer.className = 'task-item__main-container'
 
-//   const checkboxForm = document.createElement('form')
-//   checkboxForm.className = 'checkbox-form'
+  const taskItemMainContent = document.createElement('div')
+  taskItemMainContent.className = 'task-item__main-content'
 
-//   const inputCheckbox = document.createElement('input')
-//   inputCheckbox.type = 'checkbox'
-//   inputCheckbox.className = 'checkbox-form__checkbox'
-//   const inputId = `task-${taskId}`
-//   inputCheckbox.id = inputId
+  taskItem.append(taskItemMainContainer)
+  taskItemMainContainer.append(taskItemMainContent)
 
-//   const labelCheckbox = document.createElement('label')
-//   labelCheckbox.htmlFor = inputId
+  const checkboxForm = document.createElement('form')
+  checkboxForm.className = 'checkbox-form'
 
-//   const taskItemText = document.createElement('span')
-//   taskItemText.className = 'task-item__text'
-//   taskItemText.innerText = taskText
+  const inputCheckbox = document.createElement('input')
+  inputCheckbox.type = 'checkbox'
+  inputCheckbox.className = 'checkbox-form__checkbox'
+  const inputId = `task-${taskId}`
+  inputCheckbox.id = inputId
 
-//   const deleteButton = document.createElement('button')
-//   deleteButton.className =
-//     'task-item__delete-button default-button delete-button'
-//   deleteButton.innerText = 'Удалить'
+  const labelCheckbox = document.createElement('label')
+  labelCheckbox.htmlFor = inputId
 
-//   taskItemMainContent.append(checkboxForm, taskItemText)
-//   checkboxForm.append(inputCheckbox, labelCheckbox)
-//   taskItemMainContainer.append(deleteButton)
+  const taskItemText = document.createElement('span')
+  taskItemText.className = 'task-item__text'
+  taskItemText.innerText = taskText
 
-//   return taskItem
-// }
+  const deleteButton = document.createElement('button')
+  deleteButton.className =
+    'task-item__delete-button default-button delete-button'
+  deleteButton.innerText = 'Удалить'
 
-// const tasksListContainer = document.querySelector('.tasks-list')
-// tasks.forEach(task => {
-//   const taskItem = createTaskItem(task.id, task.text)
-//   tasksListContainer.append(taskItem)
-// })
+  taskItemMainContent.append(checkboxForm, taskItemText)
+  checkboxForm.append(inputCheckbox, labelCheckbox)
+  taskItemMainContainer.append(deleteButton)
+
+  return taskItem
+}
