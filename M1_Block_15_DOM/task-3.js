@@ -3,6 +3,64 @@ const tasksListContainer = document.querySelector('.tasks-list')
 const tasks = []
 const textErrorsEmpty = 'Название задачи не должно быть пустым.'
 const textErrorsDublicate = 'Задача с таким названием уже существует.'
+let idDeleteItems
+
+//*-- crate modalWindow
+const bodys = document.querySelector('body')
+const modalOverlay = document.createElement('div')
+modalOverlay.classList.add('modal-overlay', 'modal-overlay_hidden')
+bodys.append(modalOverlay)
+
+const deleteModal = document.createElement('div')
+deleteModal.classList.add('delete-modal')
+modalOverlay.append(deleteModal)
+
+const modalQuestion = document.createElement('h3')
+modalQuestion.classList.add('delete-modal__question')
+modalQuestion.textContent = 'Вы действительно хотите удалить эту задачу?'
+deleteModal.prepend(modalQuestion)
+
+const deleteModalButton = document.createElement('div')
+deleteModalButton.classList.add('delete-modal__buttons')
+deleteModal.append(deleteModalButton)
+
+const cancelButton = document.createElement('button')
+cancelButton.classList.add(
+  'delete-modal__button',
+  'delete-modal__cancel-button',
+)
+cancelButton.textContent = 'Отмена'
+deleteModalButton.appendChild(cancelButton)
+
+const confirmButton = document.createElement('button')
+confirmButton.classList.add(
+  'delete-modal__button',
+  'delete-modal__confirm-button',
+)
+confirmButton.textContent = 'Удалить'
+deleteModalButton.appendChild(confirmButton)
+
+const modalWindowInJS = document.querySelector('.modal-overlay')
+
+//?--inicialisations buttons in js
+const buttonsCancelConfirm = document.querySelector('.delete-modal__buttons')
+buttonsCancelConfirm.addEventListener('click', e => {
+  if (e.target.closest('.delete-modal__confirm-button')) {
+    const tempDeleteItems = tasksListContainer.querySelectorAll('.task-item')
+    tempDeleteItems.forEach(elem => {
+      if (elem.dataset.taskId === idDeleteItems) {
+        elem.remove()
+      }
+    })
+    tasks.forEach((item, index) => {
+      if ((item.id = idDeleteItems)) {
+        delete tasks[index]
+        console.log(tasks[index])
+      }
+    })
+  }
+  modalWindowInJS.classList.add('modal-overlay_hidden')
+})
 
 mainForm.addEventListener('submit', e => {
   e.preventDefault()
@@ -26,11 +84,14 @@ mainForm.addEventListener('submit', e => {
   } else outErrors(textErrorsEmpty)
 })
 
+//?--buttons
 tasksListContainer.addEventListener('click', e => {
   const { target } = e
   const deleteButton = target.closest('button')
   if (deleteButton) {
-    console.log(deleteButton)
+    modalWindowInJS.classList.remove('modal-overlay_hidden')
+    const divTaskItem = target.closest('.task-item')
+    idDeleteItems = divTaskItem.dataset.taskId
   }
 })
 
