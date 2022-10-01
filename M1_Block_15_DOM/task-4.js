@@ -5,6 +5,8 @@ const textErrorsEmpty = 'Название задачи не должно быт�
 const textErrorsDublicate = 'Задача с таким названием уже существует.'
 let switchTheme = 7
 let idDeleteItems
+let borderStyle = `none`
+let taskItemStyle = `initial`
 
 const bodys = document.querySelector('body')
 const modalOverlay = document.createElement('div')
@@ -107,6 +109,7 @@ const createTaskItem = (taskId, taskText) => {
   const taskItem = document.createElement('div')
   taskItem.className = 'task-item'
   taskItem.dataset.taskId = taskId
+  taskItem.style.color = taskItemStyle
 
   const taskItemMainContainer = document.createElement('div')
   taskItemMainContainer.className = 'task-item__main-container'
@@ -137,6 +140,7 @@ const createTaskItem = (taskId, taskText) => {
   deleteButton.className =
     'task-item__delete-button default-button delete-button'
   deleteButton.innerText = 'Удалить'
+  deleteButton.style.border = borderStyle
 
   taskItemMainContent.append(checkboxForm, taskItemText)
   checkboxForm.append(inputCheckbox, labelCheckbox)
@@ -152,10 +156,14 @@ document.addEventListener('keydown', e => {
     switchTheme ^= 5
     switch (switchTheme) {
       case 2:
-        changingTheme(`1px solid #ffffff`, `#24292E`, `#ffffff`)
+        borderStyle = `1px solid #ffffff`
+        taskItemStyle = `#ffffff`
+        changingTheme(borderStyle, `#24292E`, taskItemStyle)
         break
       case 7:
-        changingTheme(`none`, `initial`, `initial`)
+        borderStyle = `none`
+        taskItemStyle = `initial`
+        changingTheme(borderStyle, `initial`, taskItemStyle)
         break
     }
   }
