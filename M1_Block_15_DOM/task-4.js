@@ -3,9 +3,9 @@ const tasksListContainer = document.querySelector('.tasks-list')
 const tasks = []
 const textErrorsEmpty = 'Название задачи не должно быть пустым.'
 const textErrorsDublicate = 'Задача с таким названием уже существует.'
+let switchTheme = 7
 let idDeleteItems
 
-//*-- crate modalWindow
 const bodys = document.querySelector('body')
 const modalOverlay = document.createElement('div')
 modalOverlay.classList.add('modal-overlay', 'modal-overlay_hidden')
@@ -83,7 +83,6 @@ mainForm.addEventListener('submit', e => {
   } else outErrors(textErrorsEmpty)
 })
 
-//?--buttons
 tasksListContainer.addEventListener('click', e => {
   const { target } = e
   const deleteButton = target.closest('button')
@@ -143,21 +142,30 @@ const createTaskItem = (taskId, taskText) => {
   return taskItem
 }
 
-document.addEventListener('keydown', event => {
-  const key = event.key
-  if (key == 'Tab') {
-    const allButton = document.querySelectorAll('button')
-    allButton.forEach(item => {
-      item.style.border = `1px solid #ffffff`
-    })
-    bodys.style.background = `#24292E`
-    const allElementsDiv = document.querySelectorAll('.task-item')
-    allElementsDiv.forEach(item => {
-      console.log(item)
-      item.style.color = `#ffffff`
-    })
-    console.log('Это - таб -', key)
-  } else {
-    bodys.style.background = `initial`
+document.addEventListener('keydown', e => {
+  const key = e.key
+  if (key === 'Tab') {
+    e.preventDefault()
+    switchTheme ^= 5
+    switch (switchTheme) {
+      case 2:
+        changingTheme(`1px solid #ffffff`, `#24292E`, `#ffffff`)
+        break
+      case 7:
+        changingTheme(`none`, `initial`, `initial`)
+        break
+    }
   }
 })
+function changingTheme(border, bodysAll, items) {
+  const allButton = document.querySelectorAll('button')
+  const allElementsDiv = document.querySelectorAll('.task-item')
+
+  allButton.forEach(item => {
+    item.style.border = border
+  })
+  bodys.style.background = bodysAll
+  allElementsDiv.forEach(item => {
+    item.style.color = items
+  })
+}
