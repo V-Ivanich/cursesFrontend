@@ -5,7 +5,7 @@ const tasks = []
 mainForm.addEventListener('submit', e => {
   e.preventDefault()
   const { target } = e
-  const mainInput = target.taskName.value
+  const mainInput = target.taskName.value.trim()
   const setId = Date.now()
   tasks.push({ id: setId, text: mainInput })
   const taskItem = createTaskItem(setId, mainInput)

@@ -7,7 +7,8 @@ const textErrorsDublicate = 'Задача с таким названием уж�
 mainForm.addEventListener('submit', e => {
   e.preventDefault()
   const { target } = e
-  const mainInput = target.taskName.value
+  const mainInput = target.taskName.value.trim()
+  target.taskName.value = mainInput
   const getDublicate = tasks.filter(elem => {
     return elem.text === mainInput
   })
@@ -17,7 +18,7 @@ mainForm.addEventListener('submit', e => {
       outErrors(textErrorsDublicate)
     } else {
       const errorsSpan = document.querySelector('.error-message-block')
-      if (errorsSpan) errorsSpan.remove()
+      if (errorsSpan !== null) errorsSpan.remove()
       const setId = Date.now()
       tasks.push({ id: setId, text: mainInput })
       const taskItem = createTaskItem(setId, mainInput)
@@ -27,6 +28,8 @@ mainForm.addEventListener('submit', e => {
 })
 
 function outErrors(textErrors) {
+  if (document.querySelector('.error-message-block') !== null)
+    document.querySelector('.error-message-block').remove()
   const errorsSpan = document.createElement('span')
   errorsSpan.classList.add('error-message-block')
   errorsSpan.textContent = textErrors

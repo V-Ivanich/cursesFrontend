@@ -64,7 +64,8 @@ buttonsCancelConfirm.addEventListener('click', e => {
 mainForm.addEventListener('submit', e => {
   e.preventDefault()
   const { target } = e
-  const mainInput = target.taskName.value
+  const mainInput = target.taskName.value.trim()
+  target.taskName.value = mainInput
   const getDublicate = tasks.filter(elem => {
     return elem.text === mainInput
   })
@@ -83,7 +84,6 @@ mainForm.addEventListener('submit', e => {
   } else outErrors(textErrorsEmpty)
 })
 
-//?--buttons
 tasksListContainer.addEventListener('click', e => {
   const { target } = e
   const deleteButton = target.closest('button')
@@ -95,6 +95,8 @@ tasksListContainer.addEventListener('click', e => {
 })
 
 function outErrors(textErrors) {
+  if (document.querySelector('.error-message-block') !== null)
+    document.querySelector('.error-message-block').remove()
   const errorsSpan = document.createElement('span')
   errorsSpan.classList.add('error-message-block')
   errorsSpan.textContent = textErrors
