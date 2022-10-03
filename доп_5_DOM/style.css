@@ -113,3 +113,28 @@ body {
 	max-width: 100%;
 	margin: 0 15px 0 0;
 }
+.select-prompt {
+  position: absolute;
+  top: -23px;
+  left: 0px;
+  margin: 0px auto;
+  width: 100%;
+  text-align: center;
+  color: #bbe3eb;
+  opacity: 0;
+
+}
+.active-prompt {
+  border-bottom: 1px solid #bbe3eb;
+  border-radius: 6px;
+  animation: prompt 2s infinite;
+}
+@keyframes prompt {
+  0%   {opacity: 0;}
+  12%   {opacity: .1;}
+  25%  {opacity: .2;}
+  50%  {opacity: .3;}
+  75%  {opacity: .2;}
+  82%   {opacity: .1;}
+  100% {opacity: 0;}
+}

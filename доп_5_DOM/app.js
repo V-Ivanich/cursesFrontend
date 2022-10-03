@@ -17,6 +17,11 @@ class CustomSelect {
     divContainer.classList.add('select-dropdown', `select-dropdown--${this.id}`)
     mainContainer.append(divContainer)
 
+    const divPrompt = document.createElement('div')
+    divPrompt.classList.add('select-prompt')
+    divPrompt.textContent = 'Test string'
+    divContainer.append(divPrompt)
+
     const buttonSelected = document.createElement('button')
     buttonSelected.classList.add(
       'select-dropdown__button',
@@ -50,6 +55,23 @@ class CustomSelect {
       ulSelect.classList.add('active')
     })
     this.liListener()
+    this.moveCursor()
+  }
+
+  moveCursor() {
+    document
+      .querySelector('.select-dropdown__button')
+      .addEventListener('mouseover', () => {
+        document.querySelector('.select-prompt').classList.add('active-prompt')
+      })
+
+    document
+      .querySelector('.select-dropdown__button')
+      .addEventListener('mouseout', () => {
+        document
+          .querySelector('.select-prompt')
+          .classList.remove('active-prompt')
+      })
   }
 
   liListener() {
@@ -70,6 +92,7 @@ class CustomSelect {
         this.options.forEach(item => {
           if (item.value === +liTarget.dataset.value) {
             this.currentSelectedOption = item
+            document.querySelector('.select-prompt').textContent = item.text
           }
         })
         document
@@ -92,6 +115,5 @@ const options = [
 
 const customSelect = new CustomSelect('123', options)
 customSelect.createContainer()
-console.log(customSelect)
 
 // customSelect.render(mainContainer)
