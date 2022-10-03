@@ -49,13 +49,19 @@ class CustomSelect {
     buttonSelect.addEventListener('click', () => {
       ulSelect.classList.add('active')
     })
-    this.liListener(ulList)
+    this.liListener()
   }
 
-  liListener(listUl) {
-    listUl.addEventListener('click', e => {
+  liListener() {
+    document.querySelector('body').addEventListener('click', e => {
       const liTarget = e.target.closest('li')
-      if (liTarget) {
+
+      if (e.target.tagName === 'BODY') {
+        document
+          .querySelector('.select-dropdown__list')
+          .classList.remove('active')
+      }
+      if (liTarget && !liTarget.classList.contains('selected')) {
         const allLi = document.querySelectorAll('.select-dropdown__list-item')
         allLi.forEach(elem => {
           elem.classList.remove('selected')
