@@ -6,16 +6,22 @@
 const mainContainer = document.querySelector('#container')
 
 class CustomSelect {
+  #id
+  #options
+  #currentSelectedOption
   constructor(id, options) {
-    this.id = id
-    this.options = options
-    this.currentSelectedOption
+    this.#id = id
+    this.#options = options
+    this.#currentSelectedOption
   }
 
-  createContainer() {
+  #createContainer(container) {
     const divContainer = document.createElement('div')
-    divContainer.classList.add('select-dropdown', `select-dropdown--${this.id}`)
-    mainContainer.append(divContainer)
+    divContainer.classList.add(
+      'select-dropdown',
+      `select-dropdown--${this.#id}`,
+    )
+    container.append(divContainer)
 
     const divPrompt = document.createElement('div')
     divPrompt.classList.add('select-prompt')
@@ -25,23 +31,26 @@ class CustomSelect {
     const buttonSelected = document.createElement('button')
     buttonSelected.classList.add(
       'select-dropdown__button',
-      `select-dropdown__button--${this.id}`,
+      `select-dropdown__button--${this.#id}`,
     )
     divContainer.prepend(buttonSelected)
 
     const spanSelected = document.createElement('span')
-    spanSelected.classList.add('select-dropdown', `select-dropdown--${this.id}`)
+    spanSelected.classList.add(
+      'select-dropdown',
+      `select-dropdown--${this.#id}`,
+    )
     spanSelected.textContent = 'Выберите элемент'
     buttonSelected.append(spanSelected)
 
     const ulList = document.createElement('ul')
     ulList.classList.add(
       'select-dropdown__list',
-      `select-dropdown__list${this.id}`,
+      `select-dropdown__list${this.#id}`,
     )
     divContainer.append(ulList)
 
-    this.options.forEach(element => {
+    this.#options.forEach(element => {
       let liSelected = document.createElement('li')
       liSelected.classList.add('select-dropdown__list-item')
       liSelected.setAttribute('data-value', element.value)
@@ -54,15 +63,19 @@ class CustomSelect {
     buttonSelect.addEventListener('click', () => {
       ulSelect.classList.add('active')
     })
-    this.liListener()
-    this.moveCursor()
+    this.#liListener()
+    this.#moveCursor()
   }
 
-  moveCursor() {
+  #moveCursor() {
     document
       .querySelector('.select-dropdown__button')
       .addEventListener('mouseover', () => {
-        document.querySelector('.select-prompt').classList.add('active-prompt')
+        if (this.#currentSelectedOption) {
+          document
+            .querySelector('.select-prompt')
+            .classList.add('active-prompt')
+        }
       })
 
     document
@@ -74,7 +87,7 @@ class CustomSelect {
       })
   }
 
-  liListener() {
+  #liListener() {
     document.querySelector('body').addEventListener('click', e => {
       const liTarget = e.target.closest('li')
 
@@ -89,21 +102,26 @@ class CustomSelect {
           elem.classList.remove('selected')
         })
         liTarget.classList.add('selected')
-        this.options.forEach(item => {
+        this.#options.forEach(item => {
           if (item.value === +liTarget.dataset.value) {
-            this.currentSelectedOption = item
+            this.#currentSelectedOption = item
             document.querySelector('.select-prompt').textContent = item.text
           }
         })
         document
           .querySelector('.select-dropdown__list')
           .classList.remove('active')
-        console.log(this.currentSelectedOption)
       }
     })
   }
 
-  render(container) {}
+  get selectedValue() {
+    return this.#currentSelectedOption
+  }
+
+  render(container) {
+    this.#createContainer(container)
+  }
 }
 const options = [
   { value: 1, text: 'JavaScript' },
@@ -114,6 +132,5 @@ const options = [
 ]
 
 const customSelect = new CustomSelect('123', options)
-customSelect.createContainer()
-
-// customSelect.render(mainContainer)
+customSelect.render(mainContainer)
+console.log(customSelect.selectedValue)

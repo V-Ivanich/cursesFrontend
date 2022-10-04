@@ -55,6 +55,11 @@ body {
     outline: none;
 }
 
+.select-dropdown__button:hover {
+  background-color: #bbe3ebd6;
+  border-radius: 6px;
+}
+
 .zmdi-chevron-down {
     position: absolute;
     right: 10px;
@@ -131,10 +136,10 @@ body {
 }
 @keyframes prompt {
   0%   {opacity: 0;}
-  12%   {opacity: .1;}
-  25%  {opacity: .2;}
-  50%  {opacity: .3;}
-  75%  {opacity: .2;}
-  82%   {opacity: .1;}
+  12%   {opacity: .15;}
+  25%  {opacity: .25;}
+  50%  {opacity: .5;}
+  75%  {opacity: .25;}
+  82%   {opacity: .15;}
   100% {opacity: 0;}
 }
