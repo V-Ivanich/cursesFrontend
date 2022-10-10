@@ -250,6 +250,3 @@ const options = [
 const customSelect = new CustomSelect('123', options)
 const mainContainer = document.querySelector('#container')
 customSelect.render(mainContainer)
-
-//? ---Вопросы
-// по поводу bind и addEventListener у элементов li
