@@ -3,6 +3,7 @@ const container = document.querySelector('#data-container')
 
 fetch(userUrl)
   .then(response => {
+    console.log(response)
     if (!response.ok) {
       throw new Error('Ошибка запроса')
     }

@@ -4,11 +4,7 @@ const container = document.querySelector('#data-container')
 const getUsersByIds = arrayIds => {
   const requests = arrayIds.map(id => fetch(`${userUrl}/${id}`))
   Promise.all(requests)
-
     .then(responses => {
-      if (responses === 'reject') {
-        throw new Error('Ошибка запроса')
-      }
       const dataResults = responses.map(requese => requese.json())
       return Promise.all(dataResults)
     })
@@ -19,12 +15,12 @@ const getUsersByIds = arrayIds => {
         container.append(outHtml)
       })
     })
-    .catch(error => {
-      console.log('error->', error)
-    })
     .finally(() => {
       const loader = document.getElementById('loader')
       loader.style.display = 'none'
+    })
+    .catch(error => {
+      console.log('error->', error)
     })
 }
 

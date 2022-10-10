@@ -1,4 +1,4 @@
-const photosUrl = 'https://jsonplaceholder.typicode.com/photo'
+const photosUrl = 'https://jsonplaceholder.typicode.com/photos'
 const container = document.querySelector('#data-container')
 
 const getFastestLoadedPhoto = ids => {
