@@ -1,15 +1,19 @@
-const userUrl = 'https://jsonplaceholder.typicode.com/users'
+const userUrl = 'https://jsonplaceholder.typicode.com/user'
 const container = document.querySelector('#data-container')
 
 const getUsersByIds = arrayIds => {
   const requests = arrayIds.map(id => fetch(`${userUrl}/${id}`))
   Promise.all(requests)
+
     .then(responses => {
-      console.log(responses)
+      if (responses === 'reject') {
+        throw new Error('Ошибка запроса')
+      }
       const dataResults = responses.map(requese => requese.json())
       return Promise.all(dataResults)
     })
     .then(datas => {
+      console.log(datas)
       datas.forEach(elem => {
         const outHtml = outputDataUsers(elem.name)
         container.append(outHtml)
@@ -33,4 +37,3 @@ const outputDataUsers = data => {
   return userItemLi
 }
 getUsersByIds([5, 6, 2, 1])
-console.log('go-go-go!')
