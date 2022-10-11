@@ -4,8 +4,11 @@ const container = document.querySelector('#data-container')
 const getFastestLoadedPhoto = ids => {
   const requests = ids.map(id => fetch(`${photosUrl}/${id}`))
   Promise.race(requests)
-    .then(result => {
-      return result.json()
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Ошибка!!!!')
+      }
+      return response.json()
     })
     .then(datas => {
       const itemPhoto = outputDatas(datas.title, datas.url)
