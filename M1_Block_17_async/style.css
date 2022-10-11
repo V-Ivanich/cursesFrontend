@@ -1,0 +1,11 @@
+
+.albums-container {
+  margin: 10px 25px;
+}
+
+li {
+  margin-top: 6px;
+  padding-left: 15px;
+  border-bottom: 1px solid royalblue;
+  border-radius: 5px;
+}
