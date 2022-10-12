@@ -1,3 +1,8 @@
+//!- Promise
+//!- End
+//!- Promise resolve
+//!- setTimeout
+
 setTimeout(() => {
   console.log('setTimeout')
 }, 0)
