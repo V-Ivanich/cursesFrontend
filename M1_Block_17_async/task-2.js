@@ -1,4 +1,4 @@
-const TODOS_URL = 'https://jsonplaceholder.typicode.com/todo'
+const TODOS_URL = 'https://jsonplaceholder.typicode.com/todos'
 
 const getTodosByIds = async ids => {
   try {
