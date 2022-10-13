@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Trebuchet MS', 'Lucida Sans', sans-serif;
+}
+.cont {
+  margin: 15px 30px;
+  padding-left: 10px;
+}
+.post {
+  padding: 10px 30px;
+  background-color: rgba(245, 213, 201, 0.863);
+  border-radius: 10px;
+  border-bottom: 1px solid rgb(77, 149, 237);
+}
+.post-comment {
+  background-color: antiquewhite;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+.post__comments-text {
+  color: rgb(120, 84, 84);
+}
+.post-comment__author {
+  margin-right: 10px;
+  color: rgb(77, 149, 237);
+}

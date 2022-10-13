@@ -1,7 +1,5 @@
 const postURL = 'https://jsonplaceholder.typicode.com/posts'
-const commentsURL = 'https://jsonplaceholder.typicode.com/comments'
-const renderPost = postId => {}
-// renderPost(1)
+const commentsURL = 'https://jsonplaceholder.typicode.com/comments/?postId='
 
 const arrayAtributes = [
   ['divBody', 'post', 'post', 'div', '', '.cont'],
@@ -14,7 +12,6 @@ const arrayAtributes = [
   ['spanText', '', 'post-comment__text', 'span', '', '.post-comments'],
 ]
 
-console.log(arrayAtributes[0])
 class CreateElem {
   constructor(components = []) {
     this.name = components[0]
@@ -34,7 +31,6 @@ class CreateElem {
     this.$sel.append(this.name)
   }
 }
-console.log(CreateElem)
 
 const divsBody = new CreateElem(arrayAtributes[0])
 divsBody.setNewElement()
@@ -59,3 +55,18 @@ spanAuthor.setNewElement()
 
 const spanText = new CreateElem(arrayAtributes[7])
 spanText.setNewElement()
+
+const renderPost = async postId => {
+  try {
+    const dataPost = await fetch(`${postURL}/${postId}`)
+    const dataComments = await fetch(`${commentsURL}${postId}`)
+    const dataResult = await Promise.all([dataPost, dataComments])
+    const parsingData = dataResult.map(responses => responses.json())
+    console.log(parsingData)
+    const allTasks = await Promise.all(parsingData)
+    console.log(allTasks)
+  } catch (error) {
+    console.log(error)
+  }
+}
+renderPost(1)
