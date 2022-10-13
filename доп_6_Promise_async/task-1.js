@@ -1,17 +1,6 @@
 const postURL = 'https://jsonplaceholder.typicode.com/posts'
 const commentsURL = 'https://jsonplaceholder.typicode.com/comments/?postId='
 
-const arrayAtributes = [
-  ['divBody', 'post', 'post', 'div', '', '.cont'],
-  ['blockH1', '', 'post__title', 'h1', 'Название Поста', '.post'],
-  ['paragraf', '', 'post__text', 'p', 'Текст Поста', '.post'],
-  ['bold', '', 'post__comments-text', 'b', 'Комментарии', '.post'],
-  ['divComment', '', 'post__comments', 'div', '', '.post'],
-  ['divComment', '', 'post-comments', 'div', '', '.post__comments'],
-  ['spanAuthor', '', 'post-comment__author', 'span', '', '.post-comments'],
-  ['spanText', '', 'post-comment__text', 'span', '', '.post-comments'],
-]
-
 class CreateElem {
   constructor(components = []) {
     this.name = components[0]
@@ -32,30 +21,6 @@ class CreateElem {
   }
 }
 
-const divsBody = new CreateElem(arrayAtributes[0])
-divsBody.setNewElement()
-
-const blockH1 = new CreateElem(arrayAtributes[1])
-blockH1.setNewElement()
-
-const paragraf = new CreateElem(arrayAtributes[2])
-paragraf.setNewElement()
-
-const textBold = new CreateElem(arrayAtributes[3])
-textBold.setNewElement()
-
-const divComment = new CreateElem(arrayAtributes[4])
-divComment.setNewElement()
-
-const divText = new CreateElem(arrayAtributes[5])
-divText.setNewElement()
-
-const spanAuthor = new CreateElem(arrayAtributes[6])
-spanAuthor.setNewElement()
-
-const spanText = new CreateElem(arrayAtributes[7])
-spanText.setNewElement()
-
 const renderPost = async postId => {
   try {
     const dataPost = await fetch(`${postURL}/${postId}`)
@@ -65,6 +30,90 @@ const renderPost = async postId => {
     console.log(parsingData)
     const allTasks = await Promise.all(parsingData)
     console.log(allTasks)
+    const titlePost = allTasks[0].title
+    const textPost = allTasks[0].body
+
+    const divsBody = new CreateElem([
+      'divBody',
+      'post',
+      'post',
+      'div',
+      '',
+      '.cont',
+    ])
+    divsBody.setNewElement()
+
+    const blockH1 = new CreateElem([
+      'blockH1',
+      '',
+      'post__title',
+      'h1',
+      titlePost,
+      '.post',
+    ])
+    blockH1.setNewElement()
+
+    const paragraf = new CreateElem([
+      'paragraf',
+      '',
+      'post__text',
+      'p',
+      textPost,
+      '.post',
+    ])
+    paragraf.setNewElement()
+
+    const textBold = new CreateElem([
+      'bold',
+      '',
+      'post__comments-text',
+      'b',
+      'Комментарии',
+      '.post',
+    ])
+    textBold.setNewElement()
+
+    const divComment = new CreateElem([
+      'divComment',
+      '',
+      'post__comments',
+      'div',
+      '',
+      '.post',
+    ])
+    divComment.setNewElement()
+
+    allTasks[1].forEach(elem => {
+      const divText = new CreateElem([
+        'divComment',
+        '',
+        'post-comments',
+        'div',
+        '',
+        '.post__comments',
+      ])
+      divText.setNewElement()
+
+      const spanAuthor = new CreateElem([
+        'spanAuthor',
+        '',
+        'post-comment__author',
+        'span',
+        elem.email,
+        '.post-comments',
+      ])
+      spanAuthor.setNewElement()
+
+      const spanText = new CreateElem([
+        'spanText',
+        '',
+        'post-comment__text',
+        'span',
+        elem.body,
+        '.post-comments',
+      ])
+      spanText.setNewElement()
+    })
   } catch (error) {
     console.log(error)
   }
