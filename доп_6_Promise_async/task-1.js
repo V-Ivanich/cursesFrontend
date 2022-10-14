@@ -25,17 +25,27 @@ const getInDataBase = async postId => {
   try {
     const dataPost = await fetch(`${postURL}/${postId}`)
     const dataComments = await fetch(`${commentsURL}${postId}`)
+    if (!dataPost.ok || !dataComments.ok) {
+      throw new Error('Ошибка подключения...')
+    }
     const dataResult = await Promise.all([dataPost, dataComments])
     const parsingData = dataResult.map(responses => responses.json())
     const allTasks = await Promise.all(parsingData)
     return allTasks
   } catch (error) {
     console.log(error)
+  } finally {
+    document.querySelector('#loading').style.display = 'none'
   }
 }
 
 const renderPost = async postId => {
   const allTasks = await getInDataBase(postId)
+  console.log('Проверка---', allTasks)
+  if (allTasks === undefined) {
+    console.log('Error!!!')
+    return
+  }
   const titlePost = allTasks[0].title
   const textPost = allTasks[0].body
 
